@@ -40,14 +40,14 @@ class Biudzetas():
 biudzetas = Biudzetas()
 pajamos = Pajamos(500, "pajamos", siuntejas="tadas")
 biudzetas.pajamu_sukurimas(pajamos)
-
-for pajamos in biudzetas.sarasas:
-    print(pajamos.siuntejas, "pajamos yra:", pajamos.suma)
-
-biudzetas = Biudzetas()
 islaidos = Islaidos(200, "islaidos", gavejas="petras")
 biudzetas.islaidu_sukurimas(islaidos)
 
-for islaidos in biudzetas.sarasas:
-    print(islaidos.gavejas, "islaidos yra:", islaidos.suma)
+for vartotojas in biudzetas.sarasas:
+    if isinstance(vartotojas, Pajamos):
+        print(f"{vartotojas.siuntejas} pajamos yra: {vartotojas.suma}")
+    elif isinstance(vartotojas, Islaidos):
+        print(f"{vartotojas.gavejas} isleido: {vartotojas.suma}")
+    else:
+        print("Nėra tokių įrašų")
 
