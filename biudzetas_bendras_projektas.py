@@ -12,7 +12,7 @@ class Islaidos(Irasas):
 class Pajamos(Irasas):
     pass
 
-# savybe: zurnalas: šarašas įrašų
+# savybe: zurnalas: sąrašas įrašų
 # turi turėti metodus:
 # Ataskaitai, balansui
 # pajamų įrašo sukūrimas ir įtraukimui į žurnalą
