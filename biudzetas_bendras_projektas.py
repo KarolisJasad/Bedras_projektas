@@ -5,7 +5,7 @@ class Irasas():
     pass
 
 # savybė: gavejas
-class Irasas(Irasas):
+class Islaidos(Irasas):
     pass
 
 # savybė: siuntejas
