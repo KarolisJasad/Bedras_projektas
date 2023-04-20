@@ -1,6 +1,6 @@
 # Komandinis darbas - biudžeto programėlė
 
-# savybės: suma ir įrašas
+# savybės: suma ir komentara
 class Irasas():
     pass
 
