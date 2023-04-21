@@ -34,14 +34,24 @@ class Biudzetas():
     def __init__(self):
         self.sarasas = []
 
-    def pajamu_sukurimas(self, pajamos, komentaras, siuntejas):
+    def pajamu_sukurimas(self, pajamos):
         self.sarasas.append(pajamos)
 
-    def islaidu_sukurimas(self, islaidos, komentaras, gavejas):
+    def islaidu_sukurimas(self, islaidos):
         self.sarasas.append(islaidos)
 
     def info_balansas(self,):
-        pass
+        bendros_pajamos = 0
+        bendros_islaidos = 0
+        for irasas in biudzetas.sarasas:
+            if isinstance(irasas, Pajamos):
+                bendros_pajamos += irasas.suma 
+            elif isinstance(irasas, Islaidos):
+                bendros_islaidos += irasas.suma 
+        print(f'Bendros pajamos yra: {bendros_pajamos}')
+        print(f'Bendros islaidos yra: {bendros_islaidos}')
+        print(f'Balansas: {bendros_pajamos - bendros_islaidos}')
+        
 
     def info_ataskaita(self,):
         for vartotojas in biudzetas.sarasas:
@@ -53,11 +63,14 @@ class Biudzetas():
                 print("Nėra tokių įrašų")
 
 biudzetas = Biudzetas()
-# pajamos = Pajamos(500, "pajamos", siuntejas="tadas")
-# biudzetas.pajamu_sukurimas(pajamos)
-# islaidos = Islaidos(200, "islaidos", gavejas="petras")
-# biudzetas.islaidu_sukurimas(islaidos)
-
+irasas = Pajamos(500, "pajamos", siuntejas="tadas")
+biudzetas.pajamu_sukurimas(irasas)
+islaidos = Islaidos(200, "islaidos", gavejas="petras")
+biudzetas.islaidu_sukurimas(islaidos)
+irasas = Pajamos(500, "pajamos", siuntejas="tadas")
+biudzetas.pajamu_sukurimas(irasas)
+islaidos = Islaidos(200, "islaidos", gavejas="petras")
+biudzetas.islaidu_sukurimas(islaidos)
 
 while True:
     clear()
@@ -70,24 +83,28 @@ while True:
     meniu = input("Pasirinkite: ")
 
     if meniu == "1":
-        pajamos = float(input('Iveskite pajamas: '))
+        irasas = float(input('Iveskite pajamas: '))
         komentaras = input('Iveskite komentarą: ')
         siuntejas = input('Įveskite siuntėją: ')
-        biudzetas.pajamu_sukurimas(pajamos, komentaras, siuntejas)
+        irasas = Pajamos(irasas, komentaras, siuntejas=siuntejas)
+        biudzetas.pajamu_sukurimas(irasas)
         print ('Pajamų įrašas įvestas')
 
     if meniu == "2":
         islaidos = float(input('Iveskite išlaidas: '))
         komentaras = input('Iveskite komentarą: ')
         gavejas = input('Įveskite gavėją: ')
-        biudzetas.islaidu_sukurimas(islaidos, komentaras, gavejas)
+        islaidos = Islaidos(islaidos, komentaras, gavejas=gavejas)
+        biudzetas.islaidu_sukurimas(islaidos)
         print ('Išlaidų įrašas įvestas')
 
     if meniu == "3":
         biudzetas.info_balansas()
+        input("Paspauskite ENTER, kad grįžti į meniu")
 
     if meniu == "4":
         biudzetas.info_ataskaita()
+        input("Paspauskite ENTER, kad grįžti į meniu")
 
     elif meniu == "0":
         break
