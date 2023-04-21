@@ -37,17 +37,21 @@ class Biudzetas():
     def info_ataskaita(self,):
         pass
 
+def sarasas():
+    for vartotojas in biudzetas.sarasas:
+        if isinstance(vartotojas, Pajamos):
+            print(f"{vartotojas.siuntejas} pajamos yra: {vartotojas.suma}")
+        elif isinstance(vartotojas, Islaidos):
+            print(f"{vartotojas.gavejas} isleido: {vartotojas.suma}")
+        else:
+            print("Nėra tokių įrašų")
+
 biudzetas = Biudzetas()
 pajamos = Pajamos(500, "pajamos", siuntejas="tadas")
 biudzetas.pajamu_sukurimas(pajamos)
 islaidos = Islaidos(200, "islaidos", gavejas="petras")
 biudzetas.islaidu_sukurimas(islaidos)
 
-for vartotojas in biudzetas.sarasas:
-    if isinstance(vartotojas, Pajamos):
-        print(f"{vartotojas.siuntejas} pajamos yra: {vartotojas.suma}")
-    elif isinstance(vartotojas, Islaidos):
-        print(f"{vartotojas.gavejas} isleido: {vartotojas.suma}")
-    else:
-        print("Nėra tokių įrašų")
 
+
+sarasas()
