@@ -62,7 +62,7 @@ class Biudzetas():
             if isinstance(vartotojas, Islaidos):
                 print(f"{vartotojas.gavejas} isleido: {vartotojas.suma} ({vartotojas.komentaras})")
 
-    def info_ataskaita(self,):
+    def info_ataskaita(self):
         for vartotojas in biudzetas.sarasas:
             if isinstance(vartotojas, Pajamos):
                 print(f"{vartotojas.siuntejas} pajamos yra: {vartotojas.suma} ({vartotojas.komentaras})")
