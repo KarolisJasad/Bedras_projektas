@@ -51,7 +51,16 @@ class Biudzetas():
         print(f'Bendros pajamos yra: {bendros_pajamos}')
         print(f'Bendros islaidos yra: {bendros_islaidos}')
         print(f'Balansas: {bendros_pajamos - bendros_islaidos}')
-        
+
+    def info_pajamos(self):
+        for vartotojas in biudzetas.sarasas:
+            if isinstance(vartotojas, Pajamos):
+                print(f"{vartotojas.siuntejas} pajamos yra: {vartotojas.suma} ({vartotojas.komentaras})")
+
+    def info_islaidos(self):
+        for vartotojas in biudzetas.sarasas:
+            if isinstance(vartotojas, Islaidos):
+                print(f"{vartotojas.gavejas} isleido: {vartotojas.suma} ({vartotojas.komentaras})")
 
     def info_ataskaita(self,):
         for vartotojas in biudzetas.sarasas:
@@ -103,9 +112,23 @@ while True:
         input("Paspauskite ENTER, kad grįžti į meniu")
 
     if meniu == "4":
-        biudzetas.info_ataskaita()
-        input("Paspauskite ENTER, kad grįžti į meniu")
-
+        print("Pasirinkite ką norite peržiūrėti")
+        print("1.Pajamas")
+        print("2.Islaidas")
+        print("3.Bendras")
+        pasirinkimas = input("Įveskite skaičių: ")
+        if pasirinkimas == "1":
+            biudzetas.info_pajamos()
+            input("Paspauskite ENTER, kad grįžti į meniu")
+        elif pasirinkimas == "2":
+            biudzetas.info_islaidos()
+            input("Paspauskite ENTER, kad grįžti į meniu")
+        elif pasirinkimas == "3":
+            biudzetas.info_ataskaita()
+            input("Paspauskite ENTER, kad grįžti į meniu")
+        else:
+            input("Neteisingai pasirinkote, paspauskite ENTER, kad grįžti į meniu")
+        
     elif meniu == "0":
         break
 
