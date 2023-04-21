@@ -32,18 +32,21 @@ class Pajamos(Irasas):
 # išlaidų įrašo sukūrimas ir įtraukimui į žurnalą
 class Biudzetas():
     def __init__(self):
-        self.sarasas = []
+        self.__sarasas = []
+
+    def biudzeto_sukurimas(self):
+        return self.__sarasas
 
     def pajamu_sukurimas(self, pajamos):
-        self.sarasas.append(pajamos)
+        self.__sarasas.append(pajamos)
 
     def islaidu_sukurimas(self, islaidos):
-        self.sarasas.append(islaidos)
+        self.__sarasas.append(islaidos)
 
     def info_balansas(self,):
         bendros_pajamos = 0
         bendros_islaidos = 0
-        for irasas in biudzetas.sarasas:
+        for irasas in self.__sarasas:
             if isinstance(irasas, Pajamos):
                 bendros_pajamos += irasas.suma 
             elif isinstance(irasas, Islaidos):
@@ -53,23 +56,24 @@ class Biudzetas():
         print(f'Balansas: {bendros_pajamos - bendros_islaidos}')
 
     def info_pajamos(self):
-        for vartotojas in biudzetas.sarasas:
+        for vartotojas in self.__sarasas:
             if isinstance(vartotojas, Pajamos):
                 print(f"{vartotojas.siuntejas} pajamos yra: {vartotojas.suma} ({vartotojas.komentaras})")
 
     def info_islaidos(self):
-        for vartotojas in biudzetas.sarasas:
+        for vartotojas in self.__sarasas:
             if isinstance(vartotojas, Islaidos):
                 print(f"{vartotojas.gavejas} isleido: {vartotojas.suma} ({vartotojas.komentaras})")
 
     def info_ataskaita(self):
-        for vartotojas in biudzetas.sarasas:
+        for vartotojas in self.__sarasas:
             if isinstance(vartotojas, Pajamos):
                 print(f"{vartotojas.siuntejas} pajamos yra: {vartotojas.suma} ({vartotojas.komentaras})")
             elif isinstance(vartotojas, Islaidos):
                 print(f"{vartotojas.gavejas} isleido: {vartotojas.suma} ({vartotojas.komentaras})")
             else:
                 print("Nėra tokių įrašų")
+    
 
 biudzetas = Biudzetas()
 irasas = Pajamos(500, "Už darbą", siuntejas="Tadas")
