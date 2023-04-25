@@ -85,6 +85,7 @@ class Biudzetas():
             biudzetas = pickle.load(f)
         return biudzetas
     
+
 biudzetas = Biudzetas()
 biudzetas = Biudzetas.pickle_nuskaitymas(biudzetas)
 
