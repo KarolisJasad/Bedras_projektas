@@ -1,12 +1,13 @@
 # Komandinis darbas - biudžeto programėlė
 
 import os
+import pickle
 def clear(): 
     if os.name == 'nt':
         os.system('cls') 
     else:
         os.system('clear')
-        
+
 # savybės: suma ir komentaras
 class Irasas():
     def __init__(self, suma, komentaras):
@@ -53,7 +54,7 @@ class Biudzetas():
                 bendros_islaidos += irasas.suma 
         print(f'Bendros pajamos yra: {bendros_pajamos}')
         print(f'Bendros islaidos yra: {bendros_islaidos}')
-        print(f'Balansas: {bendros_pajamos - bendros_islaidos}')
+        print(f'Balansas: {bendros_pajamos - bendros_islaidos}') 
 
     def info_pajamos(self):
         for vartotojas in self.__sarasas:
@@ -73,17 +74,19 @@ class Biudzetas():
                 print(f"{vartotojas.gavejas} isleido: {vartotojas.suma} ({vartotojas.komentaras})")
             else:
                 print("Nėra tokių įrašų")
-    
 
+    def pickle_sukurimas(biudzetas):
+        with open("irasas.pickle", "wb") as file:
+            pickle.dump(biudzetas, file)
+        return biudzetas
+    
+    def pickle_nuskaitymas(biudzetas):
+        with open('irasas.pickle', 'rb') as f:
+            biudzetas = pickle.load(f)
+        return biudzetas
+    
 biudzetas = Biudzetas()
-irasas = Pajamos(500, "Už darbą", siuntejas="Tadas")
-biudzetas.pajamu_sukurimas(irasas)
-islaidos = Islaidos(200, "Kuras", gavejas="Petras")
-biudzetas.islaidu_sukurimas(islaidos)
-irasas = Pajamos(700, "Premija", siuntejas="Tadas")
-biudzetas.pajamu_sukurimas(irasas)
-islaidos = Islaidos(400, "Svente", gavejas="Jonas")
-biudzetas.islaidu_sukurimas(islaidos)
+biudzetas = Biudzetas.pickle_nuskaitymas(biudzetas)
 
 while True:
     clear()
@@ -101,6 +104,7 @@ while True:
         siuntejas = input('Įveskite siuntėją: ')
         irasas = Pajamos(irasas, komentaras, siuntejas=siuntejas)
         biudzetas.pajamu_sukurimas(irasas)
+        Biudzetas.pickle_sukurimas(biudzetas)
         print ('Pajamų įrašas įvestas')
 
     if meniu == "2":
@@ -109,6 +113,7 @@ while True:
         gavejas = input('Įveskite gavėją: ')
         islaidos = Islaidos(islaidos, komentaras, gavejas=gavejas)
         biudzetas.islaidu_sukurimas(islaidos)
+        Biudzetas.pickle_sukurimas(biudzetas)
         print ('Išlaidų įrašas įvestas')
 
     if meniu == "3":
