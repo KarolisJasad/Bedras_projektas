@@ -2,6 +2,16 @@
 
 import os
 import pickle
+import logging
+
+logger = logging.getLogger('product_changes')
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler('product_changes.log')
+file_handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+
 def clear(): 
     if os.name == 'nt':
         os.system('cls') 
@@ -42,7 +52,19 @@ class Biudzetas():
         self.__sarasas.append(pajamos)
 
     def islaidu_sukurimas(self, islaidos):
-        self.__sarasas.append(islaidos)
+        bendros_pajamos = 0
+        bendros_islaidos = 0
+        for irasas in self.__sarasas:
+            if isinstance(irasas, Pajamos):
+                bendros_pajamos += irasas.suma 
+            elif isinstance(irasas, Islaidos):
+                bendros_islaidos += irasas.suma
+        balansas = bendros_pajamos - bendros_islaidos 
+        if islaidos.suma > balansas:
+            logger.warning("Vartotojas bande isleist daugiau pinigu nei turim")
+            print("Neuztenka pajamu islaidoms")
+        else:
+            self.__sarasas.append(islaidos)
 
     def info_balansas(self,):
         bendros_pajamos = 0
@@ -85,7 +107,6 @@ class Biudzetas():
             biudzetas = pickle.load(f)
         return biudzetas
     
-
 biudzetas = Biudzetas()
 biudzetas = Biudzetas.pickle_nuskaitymas(biudzetas)
 
@@ -100,7 +121,12 @@ while True:
     meniu = input("Pasirinkite: ")
 
     if meniu == "1":
-        irasas = float(input('Iveskite pajamas: '))
+        while True:
+            try:     
+                irasas = float(input('Iveskite pajamas: '))
+                break
+            except ValueError:
+                print("Neteisingai ivedete pajamas, veskite is naujo")
         komentaras = input('Iveskite komentarą: ')
         siuntejas = input('Įveskite siuntėją: ')
         irasas = Pajamos(irasas, komentaras, siuntejas=siuntejas)
@@ -109,10 +135,15 @@ while True:
         print ('Pajamų įrašas įvestas')
 
     if meniu == "2":
-        islaidos = float(input('Iveskite išlaidas: '))
+        while True:
+            try:
+                islaidos = float(input('Iveskite išlaidas: '))
+                break
+            except ValueError:
+                print("Neteisingai ivedete islaidas, iveskite per nauja")
         komentaras = input('Iveskite komentarą: ')
         gavejas = input('Įveskite gavėją: ')
-        islaidos = Islaidos(islaidos, komentaras, gavejas=gavejas)
+        islaidos = Islaidos(float(islaidos), komentaras, gavejas=gavejas)
         biudzetas.islaidu_sukurimas(islaidos)
         Biudzetas.pickle_sukurimas(biudzetas)
         print ('Išlaidų įrašas įvestas')
